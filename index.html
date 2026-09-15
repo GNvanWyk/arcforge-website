@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArcForge Designs | CNC Plasma Cutting & Custom Metal Fabrication</title>
+  <meta name="description" content="ArcForge Designs specializes in precision CNC plasma cutting, CAD file preparation/vectorization, and custom metal fabrication from DXF/CAD files in South Africa." />
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            plasma: {
+              300: '#70f8ff',
+              400: '#38f5ff',
+              500: '#00f0ff',
+              600: '#00c7d4',
+              700: '#0284c7',
+              800: '#0369a1',
+              900: '#075985',
+            },
+            charcoal: {
+              950: '#05070a',
+              900: '#07090e',
+              850: '#0d111a',
+              800: '#141a27',
+              750: '#1b2333',
+              700: '#242f44',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Accents & Electric Plasma Blue Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Interactive JavaScript Handlers -->
+  <script src="script.js" defer></script>
+</head>
+<body class="bg-[#07090e] text-slate-100 min-h-screen selection:bg-[#00f0ff] selection:text-slate-950 relative overflow-x-hidden antialiased metal-grid-bg">
+
+  <!-- Ambient Plasma Glow Lighting -->
+  <div class="plasma-ambient top-0 left-1/3 w-[600px] h-[600px] bg-[#00f0ff]/10 animate-plasma-torch"></div>
+  <div class="plasma-ambient top-[32rem] right-[-100px] w-[500px] h-[500px] bg-[#0284c7]/15"></div>
+  <div class="plasma-ambient top-[72rem] left-[-80px] w-[550px] h-[550px] bg-[#00f0ff]/10"></div>
+  <div class="plasma-ambient bottom-40 right-10 w-[600px] h-[600px] bg-[#0284c7]/12"></div>
+
+  <!-- ================================================================= -->
+  <!-- HEADER / NAVIGATION                                              -->
+  <!-- ================================================================= -->
+  <header id="main-navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Business Logo -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-[#00f0ff]/40 flex items-center justify-center shadow-lg shadow-[#00f0ff]/20 group-hover:scale-105 group-hover:border-[#00f0ff] transition-all duration-300">
+            <!-- Electric Plasma Arc Torch Icon -->
+            <svg class="w-6 h-6 text-[#00f0ff] drop-shadow-[0_0_6px_rgba(0,240,255,0.7)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xl font-bold tracking-tight text-white brand-font leading-none">
+              ArcForge <span class="text-[#00f0ff] drop-shadow-[0_0_8px_rgba(0,240,255,0.5)]">Designs</span>
+            </span>
+            <span class="text-[10px] tracking-widest uppercase text-slate-400 font-semibold mt-1">CNC Plasma & Fabrication</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+          <a href="#services" class="hover:text-[#00f0ff] transition-colors">Services</a>
+          <a href="#capabilities" class="hover:text-[#00f0ff] transition-colors">Capabilities</a>
+          <a href="#gallery" class="hover:text-[#00f0ff] transition-colors">Gallery</a>
+          <a href="#how-it-works" class="hover:text-[#00f0ff] transition-colors">How It Works</a>
+          <a href="#quote" class="hover:text-[#00f0ff] transition-colors">Get a Quote</a>
+        </nav>
+
+        <!-- Header Controls (Theme Toggle & CTA Button) -->
+        <div class="hidden md:flex items-center space-x-3">
+          <!-- Unobtrusive Theme Toggle Button -->
+          <button 
+            type="button" 
+            class="theme-toggle-btn" 
+            aria-label="Toggle theme (Light / Dark)"
+            title="Toggle theme (Light / Dark)"
+          >
+            <!-- Sun Icon (Visible in dark mode) -->
+            <svg class="sun-icon w-4 h-4 text-amber-400 drop-shadow-[0_0_6px_rgba(251,191,36,0.6)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <!-- Moon Icon (Visible in light mode) -->
+            <svg class="moon-icon w-4 h-4 hidden text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- Request Quote CTA Button -->
+          <a href="#quote" class="btn-plasma-primary px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide transition-all uppercase">
+            Request Quote
+          </a>
+        </div>
+
+        <!-- Mobile Header Controls (Theme Toggle + Hamburger) -->
+        <div class="flex md:hidden items-center gap-2">
+          <!-- Mobile Theme Toggle -->
+          <button 
+            type="button" 
+            class="theme-toggle-btn" 
+            aria-label="Toggle theme (Light / Dark)"
+            title="Toggle theme (Light / Dark)"
+          >
+            <svg class="sun-icon w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg class="moon-icon w-4 h-4 hidden text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- Mobile Menu Toggle Button -->
+          <button id="mobile-menu-btn" type="button" aria-expanded="false" aria-label="Toggle navigation menu" class="p-2 rounded-lg text-slate-300 hover:text-[#00f0ff] hover:bg-slate-800/80 focus:outline-none focus:ring-2 focus:ring-[#00f0ff]">
+            <!-- Hamburger Icon -->
+            <svg class="hamburger-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Close Icon -->
+            <svg class="close-icon w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#07090e]/98 border-b border-slate-800 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-3">
+      <a href="#services" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-200 hover:bg-slate-800/80 hover:text-[#00f0ff]">Services</a>
+      <a href="#capabilities" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-200 hover:bg-slate-800/80 hover:text-[#00f0ff]">Capabilities</a>
+      <a href="#gallery" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-200 hover:bg-slate-800/80 hover:text-[#00f0ff]">Gallery</a>
+      <a href="#how-it-works" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-200 hover:bg-slate-800/80 hover:text-[#00f0ff]">How It Works</a>
+      <a href="#quote" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-200 hover:bg-slate-800/80 hover:text-[#00f0ff]">Get a Quote</a>
+      <div class="pt-3">
+        <a href="#quote" class="btn-plasma-primary block text-center w-full py-3 rounded-lg text-sm font-bold uppercase tracking-wider">
+          Request Quote
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================= -->
+  <!-- HERO SECTION                                                      -->
+  <!-- ================================================================= -->
+  <section class="pt-32 pb-20 md:pt-40 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Hero Copy -->
+      <div class="lg:col-span-7 text-center lg:text-left">
+        
+        <!-- Electric Plasma Badge -->
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/90 border border-[#00f0ff]/30 text-[#00f0ff] text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm shadow-[#00f0ff]/10">
+          <span class="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping"></span>
+          <span>Precision CNC Plasma Cutting &bull; Custom Metal Fabrication</span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-[1.15] brand-font">
+          High-Precision CNC Plasma Cutting & <span class="bg-gradient-to-r from-[#00f0ff] via-[#38f5ff] to-[#0284c7] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(0,240,255,0.4)]">Custom Metal Fabrication</span>
+        </h1>
+
+        <!-- Subtext -->
+        <p class="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-normal">
+          We transform your CAD drawings, DXF files, and sketches into clean, burr-free, dimensionally accurate cut metal parts. From one-off prototypes to high-volume production runs.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-12">
+          <a href="#quote" class="btn-plasma-primary w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold uppercase tracking-wider text-center">
+            Request a Free Quote
+          </a>
+          <a href="#capabilities" class="btn-secondary-mode w-full sm:w-auto px-8 py-4 rounded-xl text-base font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-[#00f0ff]/50 hover:text-[#00f0ff] transition-all text-center">
+            Explore Capabilities &rarr;
+          </a>
+        </div>
+
+        <!-- Quick Spec Counters -->
+        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 text-left">
+          <div class="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+            <div class="text-2xl sm:text-3xl font-bold text-[#00f0ff] brand-font">0.5mm &ndash; 20mm</div>
+            <div class="text-[11px] text-slate-400 font-medium uppercase tracking-wider mt-1">Plate Thickness</div>
+          </div>
+          <div class="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+            <div class="text-2xl sm:text-3xl font-bold text-white brand-font">&plusmn;0.5mm</div>
+            <div class="text-[11px] text-slate-400 font-medium uppercase tracking-wider mt-1">Tolerance Precision</div>
+          </div>
+          <div class="p-3 rounded-lg bg-slate-900/50 border border-slate-800">
+            <div class="text-2xl sm:text-3xl font-bold text-[#00f0ff] brand-font">24&ndash;48 hr</div>
+            <div class="text-[11px] text-slate-400 font-medium uppercase tracking-wider mt-1">Fast Turnaround</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hero Visual: CNC Plasma Torch Cutting Graphic & Material Badges -->
+      <div class="lg:col-span-5 relative">
+        <div class="plasma-panel p-6 sm:p-8 rounded-3xl plasma-border-glow relative overflow-hidden">
+          
+          <!-- Inner Torch Highlight Glow -->
+          <div class="absolute -top-16 -right-16 w-40 h-40 bg-[#00f0ff]/20 rounded-full filter blur-3xl pointer-events-none"></div>
+
+          <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+              <span class="text-xs font-mono text-slate-400 ml-2">torch_controller.dxf</span>
+            </div>
+            <span class="text-xs px-2.5 py-1 rounded bg-[#00f0ff]/10 text-[#00f0ff] border border-[#00f0ff]/30 font-mono font-semibold">
+              PLASMA ACTIVE
+            </span>
+          </div>
+
+          <!-- Simulated Cutting Bed -->
+          <div class="relative bg-slate-950 rounded-2xl p-6 border border-slate-800/80 mb-6 font-mono text-xs text-slate-300">
+            <div class="flex items-center justify-between text-slate-400 mb-4 pb-2 border-b border-slate-900">
+              <span>TORCH VOLTAGE: <strong class="text-[#00f0ff]">128V</strong></span>
+              <span>FEED RATE: <strong class="text-white">2400 mm/min</strong></span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">&gt; File Input:</span>
+                <span class="text-white font-semibold">Flange_Gusset_Set.dxf</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">&gt; Material Selected:</span>
+                <span class="text-[#00f0ff]">Mild Steel S275JR (6.0mm)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">&gt; Piercing Routine:</span>
+                <span class="text-emerald-400">Verified &bull; Zero Kerf Errors</span>
+              </div>
+            </div>
+
+            <!-- Cut Graphic -->
+            <div class="mt-5 p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center gap-4">
+              <div class="w-16 h-16 border-2 border-dashed border-[#00f0ff] rounded-lg flex items-center justify-center">
+                <svg class="w-8 h-8 text-[#00f0ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+                </svg>
+              </div>
+              <div class="text-left">
+                <div class="text-white font-bold text-sm">Automated Nesting</div>
+                <div class="text-slate-400 text-xs">92% Material Yield Optimization</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Material Badges -->
+          <div class="flex flex-wrap gap-2 text-xs font-semibold">
+            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Mild Steel (1&ndash;20mm)</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Stainless Steel (304/316)</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Aluminum Plate</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">Checkered Tread Plate</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- SERVICES & CAPABILITIES GRID (CARDS)                              -->
+  <!-- ================================================================= -->
+  <section id="services" class="py-24 bg-[#05070a] border-y border-slate-800/80 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#00f0ff] mb-2 block">Our Core Solutions</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight brand-font mb-4">
+          Services & Industrial Capabilities
+        </h2>
+        <p class="text-slate-400 text-base sm:text-lg">
+          From digital CAD geometry to high-amperage plasma arc cutting and post-processing fabrication, we deliver ready-to-weld, bolt-together metal parts.
+        </p>
+      </div>
+
+      <!-- Services 3-Card Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1: CNC Plasma Cutting -->
+        <div class="plasma-panel plasma-panel-hover p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 rounded-2xl bg-[#00f0ff]/10 border border-[#00f0ff]/30 flex items-center justify-center text-[#00f0ff] mb-6 shadow-md shadow-[#00f0ff]/10">
+              <!-- Cutting Torch Icon -->
+              <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-3 brand-font">CNC Plasma Cutting</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Precision sheet metal and plate cutting directly from your DXF or vector CAD files. Clean cut edges, minimal dross, and consistent dimensional accuracy across all profiles.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-300 font-medium mb-8">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Mild Steel from 0.8mm up to 20mm plate</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Stainless Steel (304 & 316) & Aluminum</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>CNC Automatic Torch Height Control (THC)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Clean holes, mounting slots & tight radii</span>
+              </li>
+            </ul>
+          </div>
+          <a href="#quote" class="inline-flex items-center text-xs font-bold text-[#00f0ff] hover:text-white uppercase tracking-wider group">
+            <span>Cut Parts With Us</span>
+            <span class="ml-1 transition-transform group-hover:translate-x-1">&rarr;</span>
+          </a>
+        </div>
+
+        <!-- Card 2: CAD & Vectorization -->
+        <div class="plasma-panel plasma-panel-hover p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 rounded-2xl bg-[#0284c7]/15 border border-[#0284c7]/40 flex items-center justify-center text-[#38f5ff] mb-6 shadow-md shadow-[#0284c7]/10">
+              <!-- CAD / Geometry Icon -->
+              <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-3 brand-font">CAD & Vectorization</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              File preparation, DXF cleanup, and custom part design from hand sketches, card templates, or raw ideas. We ensure proper kerf width compensation and cut path continuity.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-300 font-medium mb-8">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>DXF / DWG / SVG file cleanup & repair</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Reverse engineering from paper or broken parts</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Automated sheet nesting for minimal waste</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Decorative sign & architectural screening vectors</span>
+              </li>
+            </ul>
+          </div>
+          <a href="#quote" class="inline-flex items-center text-xs font-bold text-[#00f0ff] hover:text-white uppercase tracking-wider group">
+            <span>Prepare My Files</span>
+            <span class="ml-1 transition-transform group-hover:translate-x-1">&rarr;</span>
+          </a>
+        </div>
+
+        <!-- Card 3: Fabrication & Assembly -->
+        <div class="plasma-panel plasma-panel-hover p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-14 h-14 rounded-2xl bg-[#00f0ff]/10 border border-[#00f0ff]/30 flex items-center justify-center text-[#00f0ff] mb-6 shadow-md shadow-[#00f0ff]/10">
+              <!-- Welding & Fabrication Icon -->
+              <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-3 brand-font">Fabrication & Assembly</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Complete downstream metalworking: precision MIG/TIG welding, deburring, grinding, beveling, surface finishing, and ready-to-install custom metal assemblies.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-300 font-medium mb-8">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Structural MIG & precision TIG welding</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Edge deburring, dross removal & radius beveling</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Tapping, drilling, countersinking & slotting</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#00f0ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span>Powder coating & industrial paint preparation</span>
+              </li>
+            </ul>
+          </div>
+          <a href="#quote" class="inline-flex items-center text-xs font-bold text-[#00f0ff] hover:text-white uppercase tracking-wider group">
+            <span>Inquire About Fabrication</span>
+            <span class="ml-1 transition-transform group-hover:translate-x-1">&rarr;</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- DETAILED CAPABILITIES & TECHNICAL SPECIFICATIONS                  -->
+  <!-- ================================================================= -->
+  <section id="capabilities" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <div class="lg:col-span-5">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#00f0ff] mb-2 block">Technical Benchmark</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight brand-font mb-6 leading-tight">
+          Shop Capabilities & Cutting Specifications
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+          Our CNC plasma cutting setup is calibrated for clean pierce initiation, consistent kerf compensation, and minimized heat-affected zones (HAZ).
+        </p>
+
+        <div class="space-y-4 text-sm">
+          <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+            <h4 class="font-bold text-white mb-1 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#00f0ff]"></span>
+              Supported Design Formats
+            </h4>
+            <p class="text-xs text-slate-400">DXF, DWG, STEP, STP, SVG, AI, EPS, and high-resolution dimensional PDF blueprints.</p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+            <h4 class="font-bold text-white mb-1 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#00f0ff]"></span>
+              Material Inventory
+            </h4>
+            <p class="text-xs text-slate-400">Mild steel plates (commercial & S275JR), 304/316 grade stainless steel, 5083/6082 structural aluminum, and wear plate.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Capabilities Data Table -->
+      <div class="lg:col-span-7">
+        <div class="plasma-panel rounded-3xl p-6 sm:p-8 border border-slate-800 overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr class="border-b border-slate-800 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                <th class="pb-4">Material</th>
+                <th class="pb-4">Gauge Range</th>
+                <th class="pb-4">Edge Quality</th>
+                <th class="pb-4 text-right">Tolerance</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 font-mono text-xs text-slate-300">
+              <tr>
+                <td class="py-4 font-sans font-bold text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                  Mild Steel
+                </td>
+                <td class="py-4 text-[#00f0ff]">0.8mm &ndash; 20mm</td>
+                <td class="py-4 text-slate-300">Clean cut, low dross</td>
+                <td class="py-4 text-right text-white">&plusmn;0.5 mm</td>
+              </tr>
+              <tr>
+                <td class="py-4 font-sans font-bold text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#00f0ff]"></span>
+                  Stainless Steel
+                </td>
+                <td class="py-4 text-[#00f0ff]">1.0mm &ndash; 12mm</td>
+                <td class="py-4 text-slate-300">Nitrogen/Air assist</td>
+                <td class="py-4 text-right text-white">&plusmn;0.5 mm</td>
+              </tr>
+              <tr>
+                <td class="py-4 font-sans font-bold text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                  Aluminum
+                </td>
+                <td class="py-4 text-[#00f0ff]">1.5mm &ndash; 10mm</td>
+                <td class="py-4 text-slate-300">Smooth face</td>
+                <td class="py-4 text-right text-white">&plusmn;0.6 mm</td>
+              </tr>
+              <tr>
+                <td class="py-4 font-sans font-bold text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  Tread Plate
+                </td>
+                <td class="py-4 text-[#00f0ff]">2.0mm &ndash; 6mm</td>
+                <td class="py-4 text-slate-300">Non-slip flooring</td>
+                <td class="py-4 text-right text-white">&plusmn;0.5 mm</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span>Custom stock gauges available upon request</span>
+            <a href="#quote" class="text-[#00f0ff] font-semibold hover:underline">Check availability &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- GALLERY SHOWCASE                                                  -->
+  <!-- ================================================================= -->
+  <section id="gallery" class="py-24 bg-[#05070a] border-y border-slate-800/80 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-[#00f0ff] mb-2 block">Our Work</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight brand-font">
+            Fabrication & Cutting Gallery
+          </h2>
+          <p class="text-slate-400 mt-2 text-sm sm:text-base">Sample cuts, decorative screens, mechanical brackets, and welded fabrications.</p>
+        </div>
+
+        <!-- Interactive Category Filter Buttons -->
+        <div class="flex flex-wrap gap-2 mt-6 md:mt-0">
+          <button type="button" data-filter="all" class="gallery-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-[#00f0ff] text-slate-950 shadow-lg shadow-[#00f0ff]/20 transition-all">
+            All Projects
+          </button>
+          <button type="button" data-filter="industrial" class="gallery-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition-all">
+            Industrial & Brackets
+          </button>
+          <button type="button" data-filter="decorative" class="gallery-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition-all">
+            Decorative & Screens
+          </button>
+          <button type="button" data-filter="custom" class="gallery-filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition-all">
+            Custom Assemblies
+          </button>
+        </div>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Gallery Item 1 -->
+        <div class="gallery-item plasma-panel p-6 rounded-2xl border border-slate-800 hover:border-[#00f0ff]/40 transition-all" data-category="industrial">
+          <div class="h-48 rounded-xl bg-gradient-to-br from-slate-900 via-slate-850 to-charcoal-800 flex flex-col items-center justify-center border border-slate-800 mb-5 relative overflow-hidden group">
+            <div class="w-16 h-16 rounded-2xl bg-[#00f0ff]/10 border border-[#00f0ff]/30 flex items-center justify-center text-[#00f0ff] text-2xl font-bold font-mono">
+              10mm
+            </div>
+            <span class="text-xs text-slate-400 font-mono mt-3">Mild Steel &bull; S275 Plate</span>
+          </div>
+          <span class="text-xs font-semibold text-[#00f0ff] uppercase tracking-wider">Heavy Industry</span>
+          <h3 class="text-lg font-bold text-white mt-1 mb-2">Chassis Gussets & Mounting Flanges</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">Precision slotted suspension brackets cut from 10mm high-tensile plate with clean bolt holes.</p>
+        </div>
+
+        <!-- Gallery Item 2 -->
+        <div class="gallery-item plasma-panel p-6 rounded-2xl border border-slate-800 hover:border-[#00f0ff]/40 transition-all" data-category="decorative">
+          <div class="h-48 rounded-xl bg-gradient-to-br from-slate-900 via-slate-850 to-charcoal-800 flex flex-col items-center justify-center border border-slate-800 mb-5 relative overflow-hidden group">
+            <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl font-bold">
+              &#10047;
+            </div>
+            <span class="text-xs text-slate-400 font-mono mt-3">2.5mm Mild Steel</span>
+          </div>
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Architectural</span>
+          <h3 class="text-lg font-bold text-white mt-1 mb-2">Custom Privacy & Gate Panels</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">Geometric botanical vector cut into 2400x1200mm panels ready for architectural powder coating.</p>
+        </div>
+
+        <!-- Gallery Item 3 -->
+        <div class="gallery-item plasma-panel p-6 rounded-2xl border border-slate-800 hover:border-[#00f0ff]/40 transition-all" data-category="custom">
+          <div class="h-48 rounded-xl bg-gradient-to-br from-slate-900 via-slate-850 to-charcoal-800 flex flex-col items-center justify-center border border-slate-800 mb-5 relative overflow-hidden group">
+            <div class="w-16 h-16 rounded-2xl bg-[#00f0ff]/10 border border-[#00f0ff]/30 flex items-center justify-center text-[#00f0ff] text-2xl font-bold font-mono">
+              TIG
+            </div>
+            <span class="text-xs text-slate-400 font-mono mt-3">304 Stainless Steel</span>
+          </div>
+          <span class="text-xs font-semibold text-[#00f0ff] uppercase tracking-wider">Custom Build</span>
+          <h3 class="text-lg font-bold text-white mt-1 mb-2">Fabricated Industrial Enclosure</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">Plasma profiled, CNC brake formed, and TIG welded weatherproof controller housing.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- HOW IT WORKS / ORDERING PROCESS (STEP-BY-STEP)                    -->
+  <!-- ================================================================= -->
+  <section id="how-it-works" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-[#00f0ff] mb-2 block">Straightforward Workflow</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight brand-font mb-4">
+        How It Works: From DXF to Cut Metal
+      </h2>
+      <p class="text-slate-400 text-base sm:text-lg">
+        Fast, transparent, and built for speed. Get your custom parts produced in four simple steps.
+      </p>
+    </div>
+
+    <!-- Step-by-Step Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      
+      <!-- Step 1 -->
+      <div class="plasma-panel p-6 rounded-2xl border border-slate-800 relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-[#00f0ff]/15 border border-[#00f0ff]/30 flex items-center justify-center text-[#00f0ff] font-bold text-lg brand-font">
+            01
+          </div>
+          <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Step One</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 brand-font">Submit Your Design</h3>
+        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+          Upload your DXF, DWG, 3D CAD model, or dimensioned hand sketch via our online form.
+        </p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="plasma-panel p-6 rounded-2xl border border-slate-800 relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-[#0284c7]/20 border border-[#0284c7]/40 flex items-center justify-center text-[#38f5ff] font-bold text-lg brand-font">
+            02
+          </div>
+          <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Step Two</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 brand-font">Material & Quote</h3>
+        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+          We inspect file geometry, calculate sheet nesting, and provide a fast, comprehensive quote breakdown.
+        </p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="plasma-panel p-6 rounded-2xl border border-slate-800 relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-[#00f0ff]/15 border border-[#00f0ff]/30 flex items-center justify-center text-[#00f0ff] font-bold text-lg brand-font">
+            03
+          </div>
+          <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Step Three</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 brand-font">Cutting & Fabrication</h3>
+        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+          Our high-amperage CNC plasma cuts each part with tight kerf control, followed by deburring and welding.
+        </p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="plasma-panel p-6 rounded-2xl border border-slate-800 relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-lg brand-font">
+            04
+          </div>
+          <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Step Four</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 brand-font">Delivery / Pickup</h3>
+        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+          Components are quality checked, deburred, packed securely, and dispatched or ready for workshop collection.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- INTERACTIVE QUOTE REQUEST FORM                                    -->
+  <!-- ================================================================= -->
+  <section id="quote" class="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="plasma-panel p-8 sm:p-12 rounded-3xl border border-slate-800 relative shadow-2xl shadow-black/80">
+      
+      <!-- Top Accent Bar -->
+      <div class="w-20 h-1.5 bg-gradient-to-r from-[#00f0ff] to-[#0284c7] rounded-full mx-auto mb-8"></div>
+
+      <div class="text-center mb-10">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight brand-font mb-3">
+          Request An Instant Quote
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
+          Send us your file or project details. We review files quickly and return a clear, competitive quote.
+        </p>
+      </div>
+
+      <form id="quote-form" class="space-y-6">
+        
+        <!-- Contact Fields: Name, Email, Phone -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div>
+            <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Full Name <span class="text-[#00f0ff]">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              required 
+              class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-[#00f0ff] focus:ring-1 focus:ring-[#00f0ff] transition-colors text-sm" 
+              placeholder="e.g. Johan van der Merwe" 
+            />
+          </div>
+
+          <div>
+            <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Email Address <span class="text-[#00f0ff]">*</span>
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              required 
+              class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-[#00f0ff] focus:ring-1 focus:ring-[#00f0ff] transition-colors text-sm" 
+              placeholder="johan@company.co.za" 
+            />
+          </div>
+
+          <div>
+            <label for="phone" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Phone Number <span class="text-[#00f0ff]">*</span>
+            </label>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              required 
+              class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-[#00f0ff] focus:ring-1 focus:ring-[#00f0ff] transition-colors text-sm" 
+              placeholder="+27 82 123 4567" 
+            />
+          </div>
+        </div>
+
+        <!-- Service Type Dropdown -->
+        <div>
+          <label for="service-type" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+            Service Type <span class="text-[#00f0ff]">*</span>
+          </label>
+          <select 
+            id="service-type" 
+            name="service-type" 
+            required 
+            class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white focus:outline-none focus:border-[#00f0ff] focus:ring-1 focus:ring-[#00f0ff] transition-colors text-sm"
+          >
+            <option value="cnc-cutting">CNC Plasma Cutting (Direct from DXF / Vector)</option>
+            <option value="cad-file-prep">CAD File Prep & Vectorization (Design / File Cleanup)</option>
+            <option value="full-fabrication">Full Fabrication (Cutting, Welding & Assembly)</option>
+          </select>
+        </div>
+
+        <!-- File Upload Drag & Drop Placeholder for DXF/CAD drawings -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+            CAD / DXF Drawings or Sketches
+          </label>
+          
+          <div id="file-dropzone" class="upload-dropzone rounded-2xl p-6 text-center cursor-pointer relative">
+            <input 
+              type="file" 
+              id="dxf-file-input" 
+              name="drawing-file" 
+              accept=".dxf,.dwg,.step,.stp,.svg,.pdf,.png,.jpg,.jpeg" 
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            
+            <div id="dropzone-prompt" class="flex flex-col items-center justify-center space-y-2 pointer-events-none">
+              <div class="w-12 h-12 rounded-xl bg-[#00f0ff]/10 border border-[#00f0ff]/30 text-[#00f0ff] flex items-center justify-center">
+                <!-- Upload Cloud / Document Icon -->
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+              </div>
+              <p class="text-sm font-semibold text-white">
+                <span class="text-[#00f0ff]">Click to browse</span> or drag and drop files here
+              </p>
+              <p class="text-xs text-slate-400">
+                Supports DXF, DWG, STEP, SVG, PDF, or photos of dimensioned hand sketches (Max 25MB)
+              </p>
+            </div>
+
+            <!-- Display for chosen file -->
+            <div id="file-details" class="hidden flex items-center justify-center gap-3">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span id="file-name-display" class="font-mono text-xs text-[#00f0ff] font-semibold">bracket_rev2.dxf</span>
+              <button id="remove-file-btn" type="button" class="text-slate-400 hover:text-red-400 text-xs underline ml-2">
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Details Text Box -->
+        <div>
+          <label for="project-details" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+            Project Details & Material Requirements <span class="text-[#00f0ff]">*</span>
+          </label>
+          <textarea 
+            id="project-details" 
+            name="project-details" 
+            rows="4" 
+            required 
+            class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-[#00f0ff] focus:ring-1 focus:ring-[#00f0ff] transition-colors text-sm" 
+            placeholder="Please specify material type (e.g. Mild Steel 5mm, 304 Stainless 3mm), quantity needed, deburring or welding requirements, and target timeline..."
+          ></textarea>
+        </div>
+
+        <!-- Submit Button in Electric Blue -->
+        <button 
+          type="submit" 
+          class="btn-plasma-primary w-full py-4 rounded-xl text-base font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span>Submit Quote Request</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+
+        <p class="text-center text-xs text-slate-400">
+          Typical response time within 2 to 4 business hours. Confidentiality guaranteed.
+        </p>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- FOOTER                                                            -->
+  <!-- ================================================================= -->
+  <footer class="border-t border-slate-800/90 bg-[#05070a] py-14 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
+        
+        <!-- Col 1: Brand & Domain Reference -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-slate-900 border border-[#00f0ff]/40 flex items-center justify-center text-[#00f0ff]">
+              <svg class="w-5 h-5 text-[#00f0ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <span class="text-xl font-bold tracking-tight text-white brand-font">
+              ArcForge <span class="text-[#00f0ff]">Designs</span>
+            </span>
+          </div>
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+            Industrial CNC plasma cutting, precision CAD vectorization, and tailored fabrication. Turning DXF and CAD files into heavy-duty metal components.
+          </p>
+          <div class="text-xs text-slate-400 font-mono">
+            Official Web: <a href="https://arcforgedesigns.co.za" target="_blank" rel="noopener noreferrer" class="text-[#00f0ff] hover:underline font-semibold">arcforgedesigns.co.za</a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest text-white mb-4">Navigation</h4>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-medium">
+            <li><a href="#services" class="hover:text-[#00f0ff] transition-colors">CNC Plasma Cutting</a></li>
+            <li><a href="#capabilities" class="hover:text-[#00f0ff] transition-colors">Capabilities & Tolerances</a></li>
+            <li><a href="#gallery" class="hover:text-[#00f0ff] transition-colors">Project Gallery</a></li>
+            <li><a href="#how-it-works" class="hover:text-[#00f0ff] transition-colors">Ordering Process</a></li>
+            <li><a href="#quote" class="hover:text-[#00f0ff] transition-colors">Request a Quote</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Legal, Social Links & Footer Theme Switcher -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest text-white mb-4">Connect & Legal</h4>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-medium mb-6">
+            <li><a href="#" class="hover:text-[#00f0ff] transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-[#00f0ff] transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-[#00f0ff] transition-colors">Material Specifications</a></li>
+          </ul>
+          
+          <!-- Social Icons -->
+          <div class="flex items-center space-x-3 text-slate-400 mb-6">
+            <!-- Instagram -->
+            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-[#00f0ff] hover:border-[#00f0ff]/50 transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-[#00f0ff] hover:border-[#00f0ff]/50 transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-[#00f0ff] hover:border-[#00f0ff]/50 transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.667 5H18V0h-3.808C10.595 0 9 1.583 9 4.615V8z"/></svg>
+            </a>
+          </div>
+
+          <!-- Footer Appearance Toggle Button -->
+          <div class="flex items-center gap-2 text-xs text-slate-400">
+            <span>Theme:</span>
+            <button 
+              type="button" 
+              class="theme-toggle-btn !w-7 !h-7 !p-1 text-xs" 
+              aria-label="Toggle theme (Light / Dark)"
+              title="Toggle theme (Light / Dark)"
+            >
+              <svg class="sun-icon w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              <svg class="moon-icon w-3.5 h-3.5 hidden text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Copyright Bar -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div>
+          &copy; <span id="current-year"></span> ArcForge Designs. All rights reserved. Registered in South Africa.
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-slate-400">arcforgedesigns.co.za</span>
+          <span>&bull;</span>
+          <a href="#main-navbar" class="text-slate-400 hover:text-[#00f0ff] transition-colors">Back to Top &uarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================================================================= -->
+  <!-- TOAST NOTIFICATION FOR INTERACTIVE QUOTE SUBMISSION              -->
+  <!-- ================================================================= -->
+  <div 
+    id="toast-notification" 
+    class="hidden-toast fixed bottom-6 right-6 z-50 max-w-sm w-full bg-slate-900 border border-[#00f0ff]/40 shadow-2xl shadow-black/80 rounded-2xl p-4 flex items-start gap-3"
+  >
+    <div class="w-8 h-8 rounded-lg bg-[#00f0ff]/20 text-[#00f0ff] flex items-center justify-center shrink-0 mt-0.5">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-sm font-bold text-white brand-font">Quote Request Dispatched</h4>
+      <p id="toast-message" class="text-xs text-slate-300 mt-1">Thank you! Your quote request has been received.</p>
+    </div>
+    <button id="toast-close" type="button" aria-label="Close notification" class="text-slate-400 hover:text-white p-1">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+</body>
+</html>

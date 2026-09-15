@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "arcforge-designs-website",
+  "compatibility_date": "2024-09-23",
+  // Specify the static assets directory for Cloudflare Pages
+  // "." serves the root directory (index.html, styles.css, script.js)
+  "pages_build_output_dir": "."
+}
+
