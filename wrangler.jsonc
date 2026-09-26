@@ -6,4 +6,3 @@
   // "." serves the root directory (index.html, styles.css, script.js)
   "pages_build_output_dir": "."
 }
-
