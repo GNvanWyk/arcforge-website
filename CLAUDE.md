@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Static marketing site for ArcForge Designs (CNC plasma cutting & custom metal fabrication, South Africa), deployed to Cloudflare Pages. No build step, no package manager, no framework — three hand-authored files plus SVG brand assets.
+Static marketing site for ArcForge Designs (CNC plasma cutting & custom metal fabrication, South Africa), deployed to Cloudflare Pages. No build step, no package manager, no framework — two hand-authored HTML pages (`index.html`, `terms.html`) sharing one stylesheet and one script, plus SVG brand assets.
 
 ## Commands
 
@@ -42,6 +42,8 @@ Since there's no build pipeline, edits to `index.html`/`styles.css`/`script.js` 
   - `initDynamicYear` — sets the footer copyright year.
 
   New interactive behavior should follow this same pattern: a new `init*()` function registered in the `DOMContentLoaded` listener, targeting elements by ID/class/data-attribute with null-guards, rather than introducing a framework or module bundler.
+
+- **[terms.html](terms.html)** — Terms & Conditions of Trade page. Duplicates the header/nav, footer and inline `tailwind.config` from `index.html` (nav links point to `index.html#...`), and loads the same `styles.css`/`script.js`. When changing the header, footer or Tailwind config, update both pages. The legal wording is owner-supplied; don't edit it. Change only markup/formatting, and bump the "Last updated" date when the text changes. Linked from both footers, the quote form (above the submit button) and the "How It Works" section.
 
 - **Brand assets**: `logo-full.svg`, `logo-mark.svg`, `favicon.svg` at repo root, referenced directly by relative path.
 - **`wrangler.jsonc`**: Cloudflare Pages config only (no Workers logic, no functions directory).

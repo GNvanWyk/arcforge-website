@@ -9,6 +9,7 @@ A high-performance static website for **ArcForge Designs**, structured and confi
 ```text
 .
 ├── index.html       # Main HTML markup styled with Tailwind CSS (via CDN)
+├── terms.html       # Terms & Conditions of Trade page (shares header/footer/styles with index.html)
 ├── styles.css       # Custom accents, brand variables, glassmorphism, & animations
 ├── script.js        # Interactive handlers (mobile menu, filtering, contact toast, scroll effects)
 ├── wrangler.jsonc   # Cloudflare Pages deployment configuration

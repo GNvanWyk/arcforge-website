@@ -262,7 +262,17 @@ function initQuoteForm() {
   const fileDetails = document.getElementById('file-details');
   const fileInput = document.getElementById('dxf-file-input');
 
+  const termsCheckbox = document.getElementById('terms-agree');
+  const submitButton = form ? form.querySelector('button[type="submit"]') : null;
+
   if (!form) return;
+
+  // Keep the submit button disabled until the Terms box is ticked
+  const syncSubmitState = () => {
+    if (submitButton && termsCheckbox) submitButton.disabled = !termsCheckbox.checked;
+  };
+  if (termsCheckbox) termsCheckbox.addEventListener('change', syncSubmitState);
+  syncSubmitState();
 
   const showToast = (message) => {
     if (!toast) return;
@@ -311,8 +321,8 @@ function initQuoteForm() {
       if (fileDetails) fileDetails.classList.add('hidden');
 
       if (submitBtn) {
-        submitBtn.disabled = false;
         submitBtn.innerHTML = originalContent;
+        syncSubmitState();
       }
 
       showToast('Quote request received! Our engineering team will review your files and respond promptly.');
