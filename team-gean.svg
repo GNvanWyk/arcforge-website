@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Placeholder portrait for Gean van Wyk">
+  <rect width="400" height="500" fill="#141a27"/>
+  <circle cx="200" cy="190" r="70" fill="#242f44"/>
+  <path d="M60 500c0-90 62-150 140-150s140 60 140 150z" fill="#242f44"/>
+  <text x="200" y="470" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#38f5ff">PHOTO PLACEHOLDER</text>
+</svg>

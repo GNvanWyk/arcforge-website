@@ -9,13 +9,19 @@ A high-performance static website for **ArcForge Designs**, structured and confi
 ```text
 .
 ├── index.html       # Main HTML markup styled with Tailwind CSS (via CDN)
+├── about.html       # About Us page (shares header/footer/styles with index.html)
+├── team-gean.svg    # Placeholder team photo for about.html (replace with real photo)
+├── team-carlton.svg # Placeholder team photo for about.html (replace with real photo)
 ├── terms.html       # Terms & Conditions of Trade page (shares header/footer/styles with index.html)
+├── privacy.html     # Privacy Policy page (shares header/footer/styles with index.html)
 ├── styles.css       # Custom accents, brand variables, glassmorphism, & animations
 ├── script.js        # Interactive handlers (mobile menu, filtering, contact toast, scroll effects)
 ├── wrangler.jsonc   # Cloudflare Pages deployment configuration
 ├── .gitignore       # Git ignore rules for Wrangler cache and system files
 └── README.md        # Project guide and deployment instructions
 ```
+
+> The header, nav and footer are duplicated (not templated) across `index.html`, `about.html`, `terms.html` and `privacy.html`. Update all four together.
 
 ---
 
