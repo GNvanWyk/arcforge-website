@@ -231,11 +231,11 @@ function initGalleryFilters() {
 
       // Update active styling
       filterButtons.forEach((b) => {
-        b.classList.remove('bg-[#00f0ff]', 'text-slate-950', 'shadow-lg', 'shadow-[#00f0ff]/20');
+        b.classList.remove('bg-[#00e5ff]', 'text-slate-950', 'shadow-lg', 'shadow-[#00e5ff]/20');
         b.classList.add('bg-slate-800/80', 'text-slate-300');
       });
       btn.classList.remove('bg-slate-800/80', 'text-slate-300');
-      btn.classList.add('bg-[#00f0ff]', 'text-slate-950', 'shadow-lg', 'shadow-[#00f0ff]/20');
+      btn.classList.add('bg-[#00e5ff]', 'text-slate-950', 'shadow-lg', 'shadow-[#00e5ff]/20');
 
       // Filter gallery cards
       galleryItems.forEach((item) => {

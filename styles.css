@@ -7,15 +7,15 @@
 
 :root {
   /* Default Dark Mode Tokens */
-  --plasma-cyan: #00f0ff;
+  --plasma-cyan: #00e5ff;
   --plasma-sky: #0284c7;
-  --plasma-glow: rgba(0, 240, 255, 0.4);
-  --plasma-glow-subtle: rgba(0, 240, 255, 0.12);
-  --bg-main: #07090e;
-  --bg-secondary: #05070a;
-  --panel-bg: rgba(15, 23, 42, 0.75);
+  --plasma-glow: rgba(0, 229, 255, 0.4);
+  --plasma-glow-subtle: rgba(0, 229, 255, 0.12);
+  --bg-main: #0b1015;
+  --bg-secondary: #11161d;
+  --panel-bg: rgba(30, 41, 59, 0.75);
   --panel-border: rgba(255, 255, 255, 0.08);
-  --text-heading: #ffffff;
+  --text-heading: #e6edf3;
   --text-body: #94a3b8;
   --text-muted: #64748b;
   --grid-dot: rgba(255, 255, 255, 0.06);
@@ -23,9 +23,9 @@
 
 /* Light Mode Tokens Override */
 html.light {
-  --plasma-cyan: #0284c7;
-  --plasma-sky: #0369a1;
-  --plasma-glow: rgba(2, 132, 199, 0.25);
+  --plasma-cyan: #0369a1;
+  --plasma-sky: #075985;
+  --plasma-glow: rgba(3, 105, 161, 0.25);
   --plasma-glow-subtle: rgba(2, 132, 199, 0.08);
   --bg-main: #f8fafc;
   --bg-secondary: #f1f5f9;
@@ -51,6 +51,14 @@ body {
 
 h1, h2, h3, h4, .brand-font {
   font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+}
+
+/* Dark mode heading/primary-text tone: soft steel off-white instead of pure white.
+   Only applies in dark mode - html.light overrides these same classes below
+   with higher specificity, so light mode is unaffected. */
+.text-white,
+.text-slate-100 {
+  color: #e6edf3 !important;
 }
 
 /* Light mode text & element transitions */
@@ -88,11 +96,11 @@ html.light .text-slate-500 {
 }
 
 /* Light mode backgrounds */
-html.light .bg-\[\#07090e\] {
+html.light .bg-\[\#0b1015\] {
   background-color: #f8fafc !important;
 }
 
-html.light .bg-\[\#05070a\] {
+html.light .bg-\[\#11161d\] {
   background-color: #f1f5f9 !important;
 }
 
@@ -119,6 +127,89 @@ html.light .border-slate-700\/80,
 html.light .border-slate-700\/70,
 html.light .divide-slate-800\/60 > :not([hidden]) ~ :not([hidden]) {
   border-color: #e2e8f0 !important;
+}
+
+/* Light mode: dial back how much accent-tinted fill/border area appears.
+   Text colors are untouched above - this only softens background/border/shadow
+   tints so the accent still reads as "reserved for CTAs and key highlights"
+   rather than washing across every card and icon on a light background. */
+html.light .bg-\[\#00e5ff\]\/10,
+html.light .bg-\[\#00e5ff\]\/15,
+html.light .bg-\[\#00e5ff\]\/20 {
+  background-color: rgba(2, 132, 199, 0.06) !important;
+}
+
+html.light .border-\[\#00e5ff\]\/30,
+html.light .border-\[\#00e5ff\]\/40,
+html.light .border-\[\#00e5ff\]\/50 {
+  border-color: rgba(2, 132, 199, 0.18) !important;
+}
+
+html.light .shadow-\[\#00e5ff\]\/10,
+html.light .shadow-\[\#00e5ff\]\/20 {
+  --tw-shadow-color: rgba(2, 132, 199, 0.1) !important;
+}
+
+html.light .ring-\[\#00e5ff\] {
+  --tw-ring-color: rgba(2, 132, 199, 0.4) !important;
+}
+
+/* Light mode: darker accent blue for text, solid fills and hover states */
+html.light .text-\[\#00e5ff\],
+html.light .hover\:text-\[\#00e5ff\]:hover,
+html.light .group:hover .group-hover\:text-\[\#00e5ff\] {
+  color: #075985 !important;
+}
+
+html.light .bg-\[\#00e5ff\] {
+  background-color: #0369a1 !important;
+  color: #ffffff !important;
+}
+
+html.light .btn-plasma-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #075985 100%);
+  color: #ffffff !important;
+  box-shadow: 0 0 16px -2px rgba(3, 105, 161, 0.35);
+}
+
+html.light .btn-plasma-primary:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%);
+  box-shadow: 0 0 22px 0 rgba(3, 105, 161, 0.45);
+}
+
+/* Light mode: darker accent in the hero headline gradient and card/step icons */
+html.light .bg-gradient-to-r.bg-clip-text {
+  background-image: linear-gradient(to right, #0369a1, #075985, #0c4a6e) !important;
+  filter: none !important;
+}
+
+html.light .text-\[\#38f5ff\] {
+  color: #075985 !important;
+}
+
+html.light .bg-\[\#0284c7\]\/15,
+html.light .bg-\[\#0284c7\]\/20 {
+  background-color: rgba(3, 105, 161, 0.08) !important;
+}
+
+html.light .border-\[\#0284c7\]\/40 {
+  border-color: rgba(3, 105, 161, 0.25) !important;
+}
+
+/* Light mode: gallery filter buttons (inactive state) */
+html.light .gallery-filter-btn.bg-slate-800\/80 {
+  background-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+html.light .gallery-filter-btn.bg-slate-800\/80:hover {
+  background-color: #cbd5e1 !important;
+}
+
+/* Light mode: gallery preview boxes match the other light cards */
+html.light .gallery-item .bg-gradient-to-br {
+  background-image: none !important;
+  background-color: #f1f5f9 !important;
 }
 
 /* Custom Scrollbar with Plasma Glow */
@@ -169,16 +260,16 @@ html.light .plasma-panel {
 
 /* Electric Plasma Glow Button */
 .btn-plasma-primary {
-  background: linear-gradient(135deg, #00f0ff 0%, #0284c7 100%);
+  background: linear-gradient(135deg, #00e5ff 0%, #0284c7 100%);
   color: #040812 !important;
   font-weight: 700;
   transition: all 0.25s ease;
-  box-shadow: 0 0 20px -2px rgba(0, 240, 255, 0.45);
+  box-shadow: 0 0 20px -2px rgba(0, 229, 255, 0.45);
 }
 
 .btn-plasma-primary:hover {
   background: linear-gradient(135deg, #38f5ff 0%, #0ea5e9 100%);
-  box-shadow: 0 0 28px 2px rgba(0, 240, 255, 0.7);
+  box-shadow: 0 0 28px 2px rgba(0, 229, 255, 0.7);
   transform: translateY(-2px);
 }
 
@@ -197,7 +288,7 @@ html.light .btn-secondary-mode:hover {
 /* Glowing Border Accent */
 .plasma-border-glow {
   border: 1px solid var(--plasma-border);
-  box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.05), 0 0 15px rgba(0, 240, 255, 0.1);
+  box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.05), 0 0 15px rgba(0, 229, 255, 0.1);
 }
 
 html.light .plasma-border-glow {
@@ -239,7 +330,7 @@ html.light .plasma-ambient {
 
 /* Interactive File Upload Zone */
 .upload-dropzone {
-  border: 2px dashed rgba(0, 240, 255, 0.35);
+  border: 2px dashed rgba(0, 229, 255, 0.35);
   transition: all 0.25s ease;
   background: rgba(15, 23, 42, 0.4);
 }
@@ -252,7 +343,7 @@ html.light .upload-dropzone {
 .upload-dropzone:hover,
 .upload-dropzone.dragover {
   border-color: var(--plasma-cyan);
-  background: rgba(0, 240, 255, 0.08);
+  background: rgba(0, 229, 255, 0.08);
   box-shadow: 0 0 20px var(--plasma-glow);
 }
 
@@ -308,7 +399,7 @@ html.light #toast-notification {
 
 /* Navbar Scrolled State Styles for Smooth Theme Handling */
 .navbar-scrolled-dark {
-  background-color: rgba(7, 9, 14, 0.95) !important;
+  background-color: rgba(11, 16, 21, 0.95) !important;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6) !important;
   border-color: #1e293b !important;
 }
