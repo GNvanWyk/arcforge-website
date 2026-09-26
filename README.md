@@ -12,6 +12,7 @@ A high-performance static website for **ArcForge Designs**, structured and confi
 ├── about.html       # About Us page (shares header/footer/styles with index.html)
 ├── team-gean.svg    # Placeholder team photo for about.html (replace with real photo)
 ├── team-carlton.svg # Placeholder team photo for about.html (replace with real photo)
+├── faq.html         # FAQ page (shares header/footer/styles with index.html)
 ├── terms.html       # Terms & Conditions of Trade page (shares header/footer/styles with index.html)
 ├── privacy.html     # Privacy Policy page (shares header/footer/styles with index.html)
 ├── styles.css       # Custom accents, brand variables, glassmorphism, & animations
@@ -21,7 +22,7 @@ A high-performance static website for **ArcForge Designs**, structured and confi
 └── README.md        # Project guide and deployment instructions
 ```
 
-> The header, nav and footer are duplicated (not templated) across `index.html`, `about.html`, `terms.html` and `privacy.html`. Update all four together.
+> The header, nav and footer are duplicated (not templated) across `index.html`, `about.html`, `faq.html`, `terms.html` and `privacy.html`. Update all five together.
 
 ---
 
