@@ -41,9 +41,14 @@ html.light {
 html {
   scroll-behavior: smooth;
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  /* Android Chrome ignores overflow-x on <body> alone, so the oversized
+     absolute ambient glows would widen the page and force sideways scrolling */
+  overflow-x: hidden;
 }
 
 body {
+  overflow-x: hidden;
+  max-width: 100%;
   background-color: var(--bg-main);
   color: var(--text-body);
   transition: background-color 0.3s ease, color 0.3s ease;
