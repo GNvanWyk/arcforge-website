@@ -30,7 +30,7 @@ html.light {
   --bg-main: #f8fafc;
   --bg-secondary: #f1f5f9;
   --panel-bg: rgba(255, 255, 255, 0.92);
-  --panel-border: rgba(226, 232, 240, 0.9);
+  --panel-border: rgba(214, 221, 230, 0.9);
   --text-heading: #0f172a;
   --text-body: #475569;
   --text-muted: #94a3b8;
@@ -132,7 +132,7 @@ html.light .border-slate-800\/90,
 html.light .border-slate-700\/80,
 html.light .border-slate-700\/70,
 html.light .divide-slate-800\/60 > :not([hidden]) ~ :not([hidden]) {
-  border-color: #e2e8f0 !important;
+  border-color: #d6dde6 !important;
 }
 
 /* Light mode: dial back how much accent-tinted fill/border area appears.
