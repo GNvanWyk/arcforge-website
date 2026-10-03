@@ -15,14 +15,17 @@ A high-performance static website for **ArcForge Designs**, structured and confi
 ├── faq.html         # FAQ page (shares header/footer/styles with index.html)
 ├── terms.html       # Terms & Conditions of Trade page (shares header/footer/styles with index.html)
 ├── privacy.html     # Privacy Policy page (shares header/footer/styles with index.html)
+├── cut-your-own.html # "Draw your own part" demo page (/cut-your-own), linked from the homepage hero
 ├── styles.css       # Custom accents, brand variables, glassmorphism, & animations
 ├── script.js        # Interactive handlers (mobile menu, filtering, contact toast, scroll effects)
+├── cnc-sim.js       # Virtual CNC plasma table animation + live terminal readout (index + cut-your-own only)
+├── cnc-draw.js      # Drawing pad for cut-your-own.html only
 ├── wrangler.jsonc   # Cloudflare Pages deployment configuration
 ├── .gitignore       # Git ignore rules for Wrangler cache and system files
 └── README.md        # Project guide and deployment instructions
 ```
 
-> The header, nav and footer are duplicated (not templated) across `index.html`, `about.html`, `faq.html`, `terms.html` and `privacy.html`. Update all five together.
+> The header, nav and footer are duplicated (not templated) across `index.html`, `about.html`, `faq.html`, `terms.html`, `privacy.html` and `cut-your-own.html`. Update all six together.
 
 ---
 
