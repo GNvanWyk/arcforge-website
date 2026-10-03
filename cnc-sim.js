@@ -10,6 +10,7 @@
  * Canvas data attributes:
  *   data-cnc-speed         - time-lapse factor for the idle loop (e.g. 3.5 = 3.5x real speed)
  *   data-cnc-custom-speed  - time-lapse factor for a visitor's own part (cut-your-own page)
+ *   data-cnc-idle="false"  - no random-part loop: park at 0;0 and only cut visitor drawings
  * Terminal elements (optional, found by attribute anywhere on the page):
  *   data-cnc-field="status|voltage|feed|file|material|stage"
  *
@@ -27,7 +28,8 @@ function initCncSim() {
   canvases.forEach((canvas) => {
     const speed = parseFloat(canvas.getAttribute('data-cnc-speed')) || 3.5;
     const customSpeed = parseFloat(canvas.getAttribute('data-cnc-custom-speed')) || speed;
-    canvas.cncMachine = window.ArcForgeCNC.create(canvas, { speed, customSpeed });
+    const idle = canvas.getAttribute('data-cnc-idle') !== 'false';
+    canvas.cncMachine = window.ArcForgeCNC.create(canvas, { speed, customSpeed, idle });
   });
 }
 
@@ -417,6 +419,7 @@ function initCncSim() {
       this.ctx = canvas.getContext('2d');
       this.timeScale = opts.speed || 3.5;
       this.customScale = opts.customSpeed || this.timeScale;
+      this.idleLoop = opts.idle !== false;
 
       this.bgLayer = document.createElement('canvas');
       this.sheetLayer = document.createElement('canvas');
@@ -734,7 +737,7 @@ function initCncSim() {
         this.pendingCustom = null;
         this.mode = 'custom';
         this.planJob(pts);
-      } else if (this.mode === 'idle') {
+      } else if (this.mode === 'idle' && this.idleLoop) {
         this.planJob(null);
       }
     }
@@ -768,6 +771,8 @@ function initCncSim() {
       if (custom) this.queue.push({ type: 'call', fn: () => {
         this.mode = 'custom-parked';
         this.emit('custom-done');
+        // No room left for another visitor part: swap in a fresh sheet straight away
+        if (!this.findBlock(CUSTOM_BLOCKS)) this.queue.push({ type: 'sheet' }, { type: 'park', dur: 0 });
       } });
     }
 
@@ -833,13 +838,14 @@ function initCncSim() {
         this.queue = [];
       } else {
         this.abort();
-        this.queue.push({ type: 'rapid', x: 0, y: 0 }, { type: 'sheet' });
+        this.queue.push({ type: 'rapid', x: 0, y: 0 }, { type: 'sheet' }, { type: 'park', dur: 0 });
       }
       this.wake();
     }
 
     // ---- Reduced motion: a static, finished sheet ------------------------------------
     fillStaticSheet() {
+      if (!this.idleLoop) return; // a machine that only cuts visitor parts starts with a clean sheet
       const { cols, rows } = this.sheet;
       const total = cols * rows;
       const count = Math.max(2, Math.round(total * 0.75));
@@ -893,7 +899,7 @@ function initCncSim() {
 
     // Nothing moving and nothing left to animate (e.g. parked after a custom cut)
     isQuiet() {
-      if (this.action || this.queue.length || this.pendingCustom || this.mode === 'idle') return false;
+      if (this.action || this.queue.length || this.pendingCustom || (this.mode === 'idle' && this.idleLoop)) return false;
       if (this.revealT < 1 || this.drops.length || this.sparks.length) return false;
       return !this.kerfs.some((kf) => this.clock - kf.pts[kf.pts.length - 1].t < KERF_COOL);
     }
