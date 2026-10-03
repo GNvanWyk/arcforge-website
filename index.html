@@ -45,6 +45,9 @@
 
   <!-- Interactive JavaScript Handlers -->
   <script src="script.js" defer></script>
+
+  <!-- Virtual CNC plasma table (hero animation + live terminal readout) -->
+  <script src="cnc-sim.js" defer></script>
 </head>
 <body class="bg-[#0b1015] text-slate-100 min-h-screen selection:bg-[#00e5ff] selection:text-slate-950 relative overflow-x-hidden antialiased metal-grid-bg">
 
@@ -224,51 +227,65 @@
           <div class="absolute -top-16 -right-16 w-40 h-40 bg-[#00e5ff]/20 rounded-full filter blur-3xl pointer-events-none"></div>
 
           <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-            <div class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
-              <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
-              <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
-              <span class="text-xs font-mono text-slate-400 ml-2">torch_controller.dxf</span>
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-3 h-3 rounded-full bg-red-500/80 shrink-0"></span>
+              <span class="w-3 h-3 rounded-full bg-yellow-500/80 shrink-0"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80 shrink-0"></span>
+              <span class="text-xs font-mono text-slate-400 ml-2 truncate">torch_controller.dxf</span>
             </div>
-            <span class="text-xs px-2.5 py-1 rounded bg-[#00e5ff]/10 text-[#00e5ff] border border-[#00e5ff]/30 font-mono font-semibold">
+            <span data-cnc-field="status" class="text-xs px-2.5 py-1 rounded bg-[#00e5ff]/10 text-[#00e5ff] border border-[#00e5ff]/30 font-mono font-semibold whitespace-nowrap shrink-0 min-w-[calc(13ch+22px)] text-center ml-2">
               PLASMA ACTIVE
             </span>
           </div>
 
-          <!-- Simulated Cutting Bed -->
+          <!-- Simulated Cutting Bed (values driven live by cnc-sim.js) -->
           <div class="relative bg-slate-950 rounded-2xl p-6 border border-slate-800/80 mb-6 font-mono text-xs text-slate-300">
-            <div class="flex items-center justify-between text-slate-400 mb-4 pb-2 border-b border-slate-900">
-              <span>TORCH VOLTAGE: <strong class="text-[#00e5ff]">128V</strong></span>
-              <span>FEED RATE: <strong class="text-white">2400 mm/min</strong></span>
+            <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-slate-400 mb-4 pb-2 border-b border-slate-900">
+              <span class="whitespace-nowrap">TORCH VOLTAGE: <strong data-cnc-field="voltage" class="inline-block min-w-[4ch] text-[#00e5ff]">128V</strong></span>
+              <span class="whitespace-nowrap">FEED RATE: <strong data-cnc-field="feed" class="inline-block min-w-[12ch] text-right text-white">2400 mm/min</strong></span>
             </div>
-            <div class="space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">&gt; File Input:</span>
-                <span class="text-white font-semibold">Flange_Gusset_Set.dxf</span>
+            <div class="space-y-2" aria-live="off">
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-slate-400 shrink-0">&gt; File Input:</span>
+                <span data-cnc-field="file" class="text-white font-semibold text-right">Flange_Gusset_Set.dxf</span>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">&gt; Material Selected:</span>
-                <span class="text-[#00e5ff]">Mild Steel S275JR (6.0mm)</span>
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-slate-400 shrink-0">&gt; Material Selected:</span>
+                <span data-cnc-field="material" class="text-[#00e5ff] text-right">Mild Steel S275JR (6.0mm)</span>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-slate-400">&gt; Piercing Routine:</span>
-                <span class="text-emerald-400">Verified &bull; Clean Pierce Start</span>
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-slate-400 shrink-0">&gt; Cutting Stage:</span>
+                <span data-cnc-field="stage" class="text-emerald-400 text-right">Active</span>
               </div>
             </div>
 
-            <!-- Cut Graphic -->
-            <div class="mt-5 p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center gap-4">
-              <div class="w-16 h-16 border-2 border-dashed border-[#00e5ff] rounded-lg flex items-center justify-center">
-                <svg class="w-8 h-8 text-[#00e5ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- Virtual CNC Plasma Table -->
+            <div class="mt-5 -mx-3 sm:mx-0 p-2 sm:p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+              <canvas
+                data-cnc-sim
+                data-cnc-speed="3.5"
+                class="block w-full h-44 sm:h-60"
+                role="img"
+                aria-label="Animated top-down view of a CNC plasma table cutting steel parts"
+              ></canvas>
+              <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 pt-2 text-[11px]">
+                <svg class="w-3.5 h-3.5 text-[#00e5ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
                 </svg>
-              </div>
-              <div class="text-left">
-                <div class="text-white font-bold text-sm">Automated Nesting</div>
-                <div class="text-slate-400 text-xs">Optimised Material Usage</div>
+                <span class="text-white font-semibold">Automated Nesting</span>
+                <span class="text-slate-500" aria-hidden="true">&middot;</span>
+                <span class="text-slate-400">Optimised Material Usage</span>
               </div>
             </div>
           </div>
+
+          <!-- Link to the interactive draw-and-cut page -->
+          <a href="cut-your-own.html" class="btn-secondary-mode flex items-center justify-center gap-2 w-full mb-6 px-5 py-3 rounded-xl text-sm font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-[#00e5ff]/50 hover:text-[#00e5ff] transition-all">
+            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+            <span>Draw &amp; Cut Your Own Part &rarr;</span>
+          </a>
 
           <!-- Material Badges -->
           <div class="flex flex-wrap gap-2 text-xs font-semibold">
