@@ -15,6 +15,7 @@ A high-performance static website for **ArcForge Designs**, structured and confi
 ├── faq.html         # FAQ page (shares header/footer/styles with index.html)
 ├── terms.html       # Terms & Conditions of Trade page (shares header/footer/styles with index.html)
 ├── privacy.html     # Privacy Policy page (shares header/footer/styles with index.html)
+├── gallery.html     # Project gallery page (filterable), linked from every header
 ├── cut-your-own.html # "Draw your own part" demo page (/cut-your-own), linked from the homepage hero
 ├── styles.css       # Custom accents, brand variables, glassmorphism, & animations
 ├── script.js        # Interactive handlers (mobile menu, filtering, contact toast, scroll effects)
@@ -25,7 +26,7 @@ A high-performance static website for **ArcForge Designs**, structured and confi
 └── README.md        # Project guide and deployment instructions
 ```
 
-> The header, nav and footer are duplicated (not templated) across `index.html`, `about.html`, `faq.html`, `terms.html`, `privacy.html` and `cut-your-own.html`. Update all six together.
+> The header, nav and footer are duplicated (not templated) across `index.html`, `about.html`, `faq.html`, `terms.html`, `privacy.html`, `cut-your-own.html` and `gallery.html`. Update all seven together.
 
 ---
 
