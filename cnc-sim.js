@@ -69,10 +69,10 @@ function initCncSim() {
 
   // Weighted so mild steel (the bread-and-butter job) comes up most often
   const MATERIALS = [
-    { name: 'Mild Steel S275JR', weight: 5, t: [1, 1.6, 2, 3, 4, 5, 6, 8, 10, 12, 16] },
-    { name: 'Stainless Steel 304', weight: 1.5, t: [1, 1.5, 2, 3, 4, 5, 6, 8, 10] },
-    { name: 'Stainless Steel 316', weight: 1, t: [1, 1.5, 2, 3, 4, 5, 6, 8] },
-    { name: 'Aluminium Plate', weight: 1.5, t: [2, 3, 4, 5, 6, 8, 10] },
+    { name: 'Mild Steel S275JR', weight: 5, t: [3, 4, 5, 6, 8, 10, 12, 16, 20] },
+    { name: 'Stainless Steel 304', weight: 1.5, t: [3, 4, 5, 6, 8, 10, 12, 16] },
+    { name: 'Stainless Steel 316', weight: 1, t: [3, 4, 5, 6, 8, 10, 12, 16] },
+    { name: 'Aluminium Plate', weight: 1.5, t: [3, 4, 5, 6, 8, 10, 12, 16] },
     { name: 'Checkered Tread Plate', weight: 1, t: [3, 4.5, 6, 8] },
   ];
 
