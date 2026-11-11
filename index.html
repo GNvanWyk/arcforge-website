@@ -701,11 +701,12 @@
             <option value="cnc-cutting">CNC Plasma Cutting (Direct from DXF / Vector)</option>
             <option value="cad-file-prep">CAD File Prep & Vectorization (Design / File Cleanup)</option>
             <option value="full-fabrication">Full Fabrication (Cutting, Welding & Assembly)</option>
+            <option value="other">Other (General Enquiry / Message)</option>
           </select>
         </div>
 
-        <!-- File Upload Drag & Drop Placeholder for DXF/CAD drawings -->
-        <div>
+        <!-- File Upload Drag & Drop Placeholder for DXF/CAD drawings (hidden when Service Type is "Other") -->
+        <div id="drawing-upload-field">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
             CAD / DXF Drawings or Sketches
           </label>
@@ -748,7 +749,7 @@
         <!-- Project Details Text Box -->
         <div>
           <label for="project-details" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-            Project Details & Material Requirements <span class="text-[#00e5ff]">*</span>
+            <span id="project-details-label-text">Project Details & Material Requirements</span> <span class="text-[#00e5ff]">*</span>
           </label>
           <textarea 
             id="project-details" 

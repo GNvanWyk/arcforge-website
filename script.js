@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initMobileMenu();
   initFileUpload();
+  initServiceTypeToggle();
   initGalleryFilters();
   initQuoteForm();
   initDynamicYear();
@@ -217,6 +218,49 @@ function initFileUpload() {
 }
 
 /**
+ * Quote form: "Other" service type turns the form into a plain message
+ * (hides the drawing upload and relabels the details box)
+ */
+function initServiceTypeToggle() {
+  const select = document.getElementById('service-type');
+  const uploadField = document.getElementById('drawing-upload-field');
+  const labelText = document.getElementById('project-details-label-text');
+  const details = document.getElementById('project-details');
+  const fileInput = document.getElementById('dxf-file-input');
+  const dropzonePrompt = document.getElementById('dropzone-prompt');
+  const fileDetails = document.getElementById('file-details');
+
+  if (!select) return;
+
+  const quoteLabel = labelText ? labelText.textContent : '';
+  const quotePlaceholder = details ? details.placeholder : '';
+
+  const sync = () => {
+    const isOther = select.value === 'other';
+
+    if (uploadField) uploadField.classList.toggle('hidden', isOther);
+    if (labelText) labelText.textContent = isOther ? 'Your Message' : quoteLabel;
+    if (details) {
+      details.placeholder = isOther
+        ? 'How can we help? Ask us anything, e.g. general questions, material availability or a project idea...'
+        : quotePlaceholder;
+    }
+
+    // Drop any file already chosen so it isn't sent with a general message
+    if (isOther && fileInput && fileInput.value) {
+      fileInput.value = '';
+      if (dropzonePrompt) dropzonePrompt.classList.remove('hidden');
+      if (fileDetails) fileDetails.classList.add('hidden');
+    }
+  };
+
+  select.addEventListener('change', sync);
+  // form.reset() fires 'reset' before the values change, so re-sync after it
+  if (select.form) select.form.addEventListener('reset', () => setTimeout(sync, 0));
+  sync();
+}
+
+/**
  * Filterable Gallery Showcase Items
  */
 function initGalleryFilters() {
@@ -301,6 +345,8 @@ function initQuoteForm() {
     e.preventDefault();
 
     const submitBtn = form.querySelector('button[type="submit"]');
+    const serviceType = form.querySelector('#service-type');
+    const isGeneralMessage = serviceType && serviceType.value === 'other';
     const originalContent = submitBtn ? submitBtn.innerHTML : 'Submit Quote Request';
 
     if (submitBtn) {
@@ -325,7 +371,9 @@ function initQuoteForm() {
         syncSubmitState();
       }
 
-      showToast('Quote request received! Our engineering team will review your files and respond promptly.');
+      showToast(isGeneralMessage
+        ? 'Message received! We\'ll get back to you shortly.'
+        : 'Quote request received! Our engineering team will review your files and respond promptly.');
     }, 1000);
   });
 }
