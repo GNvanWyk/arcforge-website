@@ -333,11 +333,17 @@ function initQuoteForm() {
 
   if (!form) return;
 
-  // Keep the submit button disabled until the Terms box is ticked
+  // Keep the submit button disabled until the Terms box is ticked and the
+  // Turnstile check has passed (initTurnstile sets data-verified on the widget)
+  const turnstileEl = form ? form.querySelector('.cf-turnstile') : null;
   const syncSubmitState = () => {
-    if (submitButton && termsCheckbox) submitButton.disabled = !termsCheckbox.checked;
+    if (!submitButton) return;
+    const termsOk = !termsCheckbox || termsCheckbox.checked;
+    const turnstileOk = !turnstileEl || turnstileEl.dataset.verified === 'true';
+    submitButton.disabled = !(termsOk && turnstileOk);
   };
   if (termsCheckbox) termsCheckbox.addEventListener('change', syncSubmitState);
+  if (form) form.addEventListener('turnstile:change', syncSubmitState);
   syncSubmitState();
 
   const showToast = (message, { error = false, title } = {}) => {
@@ -446,7 +452,11 @@ function initQuoteForm() {
 
     // A Turnstile token works only once: get a fresh one for the next submit
     // (after form.reset(), which would otherwise clear the new token's field)
+    // and keep the button disabled until it has passed again
     if (window.turnstile && window._turnstileWidgetId != null) {
+      const widget = form.querySelector('.cf-turnstile');
+      if (widget) widget.dataset.verified = 'false';
+      syncSubmitState();
       try { window.turnstile.reset(window._turnstileWidgetId); } catch { /* widget gone */ }
     }
   });
@@ -472,11 +482,22 @@ function initTurnstile() {
     }
     const compact = (el.parentElement ? el.parentElement.clientWidth : 0) < 300;
     if (compact && el.parentElement) el.parentElement.style.minHeight = '140px';
+    // Tell initQuoteForm when the check passes or lapses, so it can enable
+    // or disable the submit button
+    const setVerified = (ok) => {
+      el.dataset.verified = ok ? 'true' : 'false';
+      const form = el.closest('form');
+      if (form) form.dispatchEvent(new Event('turnstile:change'));
+    };
     try {
       window._turnstileWidgetId = window.turnstile.render(el, {
         sitekey: el.dataset.sitekey,
         theme: el.dataset.theme || 'auto',
         size: compact ? 'compact' : 'normal',
+        callback: () => setVerified(true),
+        'expired-callback': () => setVerified(false),
+        'timeout-callback': () => setVerified(false),
+        'error-callback': () => setVerified(false),
       });
     } catch { /* already rendered */ }
   };
