@@ -61,7 +61,7 @@ npx serve .
 ### 1. Direct Deployment via Wrangler CLI
 
 ```bash
-npx wrangler pages deploy . --project-name=arcforge-designs-website
+npx wrangler pages deploy . --project-name=arcforge-website
 ```
 
 ### 2. Git Integration (GitHub / GitLab)

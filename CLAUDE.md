@@ -24,7 +24,7 @@ To test the quote form locally with `wrangler pages dev`, put `RESEND_API_KEY=..
 
 Deploy directly:
 ```bash
-npx wrangler pages deploy . --project-name=arcforge-designs-website
+npx wrangler pages deploy . --project-name=arcforge-website
 ```
 (Or via Cloudflare Dashboard Git integration; `wrangler.jsonc` sets `pages_build_output_dir` to `.`, so Cloudflare serves the repo root as-is.)
 

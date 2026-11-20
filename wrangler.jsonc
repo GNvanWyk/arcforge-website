@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "arcforge-designs-website",
+  "name": "arcforge-website",
   "compatibility_date": "2024-09-23",
   // Node.js APIs for Pages Functions (functions/api/quote.js uses Buffer)
   "compatibility_flags": ["nodejs_compat"],
