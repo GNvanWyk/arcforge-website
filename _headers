@@ -1,0 +1,13 @@
+# Cloudflare Pages response headers for every static file (Pages Functions
+# such as /api/quote set their own headers and are not affected by this file).
+# CSP allow-list = what the pages actually load: Tailwind Play CDN, Turnstile
+# (script + iframe), Google Fonts (stylesheet + font files). style-src needs
+# 'unsafe-inline' because the Tailwind Play CDN injects a <style> element.
+# No inline scripts: the Tailwind theme lives in tailwind-config.js.
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; frame-src https://challenges.cloudflare.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests

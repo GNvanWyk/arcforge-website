@@ -26,7 +26,9 @@
  *   TURNSTILE_SECRET_KEY  required, secret. Cloudflare Turnstile secret for
  *                         the widget on the quote form (site key is in index.html).
  *
- * Order of checks: honeypot, then Turnstile, then field validation, then Resend.
+ * Order of checks: honeypot, then Turnstile, then field validation, then the
+ * drawing file (size, extension, first bytes), then Resend. Nothing is sent
+ * if any check fails.
  *
  * Senders must be on mail.arcforgedesigns.co.za (the domain verified in
  * Resend). Never use the bare arcforgedesigns.co.za domain, which is Zoho Mail.
@@ -50,7 +52,14 @@ const NOT_GIVEN = 'Not given';
 // encoded, which is under Resend's 40 MB per-email attachment limit.
 const MAX_FILE_BYTES = 25 * 1024 * 1024;
 const MAX_REQUEST_BYTES = MAX_FILE_BYTES + 1024 * 1024; // file + form fields
+// Each extension must also pass fileContentMatches(), so a renamed zip,
+// executable or Office file is refused even with an allowed extension.
 const ALLOWED_EXTENSIONS = ['dxf', 'dwg', 'svg', 'pdf', 'png', 'jpg', 'jpeg'];
+const SNIFF_BYTES = 4096; // how much of the file the content check reads
+
+// Anything in an SVG that could run code when the drawing is opened in a browser.
+const SVG_ACTIVE_CONTENT =
+  /<script|<foreignObject|<iframe|<embed|<object|javascript:|data:text\/html|\son[a-z]+\s*=/i;
 
 // Field length caps (characters)
 const MAX_NAME = 200;
@@ -147,6 +156,10 @@ export async function onRequestPost({ request, env }) {
     }
     const extension = (file.name.split('.').pop() || '').toLowerCase();
     if (!ALLOWED_EXTENSIONS.includes(extension)) {
+      return json({ ok: false, error: 'file-type' }, 415);
+    }
+    if (!(await fileContentMatches(file, extension))) {
+      console.warn('quote: file content does not match its extension', extension);
       return json({ ok: false, error: 'file-type' }, 415);
     }
     attachment = {
@@ -274,15 +287,60 @@ function safe(value) {
   return value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-/** Attachment name without path parts or odd characters, keeping the extension. */
+/**
+ * Attachment name without path parts: only letters, numbers, dot, dash and
+ * underscore, at most 80 characters before the (already checked) extension.
+ * Falls back to drawing-YYYY-MM-DD.<ext> when nothing usable is left.
+ */
 function safeFilename(name, extension) {
-  const base = name
+  const base = String(name || '')
     .replace(/^.*[\\/]/, '')
     .replace(/\.[^.]*$/, '')
-    .replace(/[^\w.\- ]+/g, '_')
-    .trim()
-    .slice(0, 100);
-  return `${base || 'drawing'}.${extension}`;
+    .replace(/[^A-Za-z0-9._-]+/g, '_')
+    .replace(/_{2,}/g, '_')
+    .replace(/^[._-]+|[._-]+$/g, '')
+    .slice(0, 80)
+    .replace(/[._-]+$/, '');
+  return `${base || `drawing-${new Date().toISOString().slice(0, 10)}`}.${extension}`;
+}
+
+/**
+ * True when the file's first bytes look like its extension says. Reads only
+ * the first SNIFF_BYTES, except for SVG (text), which is read in full so it
+ * can be screened for scripts.
+ */
+async function fileContentMatches(file, extension) {
+  const head = new Uint8Array(await file.slice(0, SNIFF_BYTES).arrayBuffer());
+  const startsWith = (bytes) => bytes.every((b, i) => head[i] === b);
+  const ascii = (s) => [...s].map((c) => c.charCodeAt(0));
+  const isText = () => !head.includes(0);
+
+  switch (extension) {
+    case 'pdf':
+      return startsWith(ascii('%PDF-'));
+    case 'png':
+      return startsWith([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+    case 'jpg':
+    case 'jpeg':
+      return startsWith([0xff, 0xd8, 0xff]);
+    case 'dwg':
+      // Every AutoCAD DWG starts with its version code, e.g. AC1015, AC1032.
+      return startsWith(ascii('AC10'));
+    case 'dxf': {
+      if (startsWith(ascii('AutoCAD Binary DXF'))) return true;
+      if (!isText()) return false;
+      // ASCII DXF: the first line is group code 0 (SECTION) or 999 (comment).
+      const firstLine = new TextDecoder().decode(head).trimStart().split(/\r?\n/, 1)[0].trim();
+      return firstLine === '0' || firstLine === '999';
+    }
+    case 'svg': {
+      if (!isText()) return false;
+      const svg = new TextDecoder().decode(await file.arrayBuffer());
+      return /<svg[\s>]/i.test(svg) && !SVG_ACTIVE_CONTENT.test(svg);
+    }
+    default:
+      return false;
+  }
 }
 
 /* Fallback notification (same fields as the quote-request-notification
