@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initServiceTypeToggle();
   initGalleryFilters();
   initQuoteForm();
+  initTurnstile();
   initDynamicYear();
 });
 
@@ -311,6 +312,7 @@ const QUOTE_ERRORS = {
   'missing-email': 'Please enter your email address so we can send you your quote.',
   'invalid-email': 'That email address doesn\'t look right. Please check it (e.g. name@example.co.za) and try again.',
   'missing-name': 'Please enter your name so we know who the quote is for.',
+  'security-check': 'Please complete the security check and try again.',
   invalid: 'Some details are missing or invalid. Please check the form and try again.',
 };
 
@@ -441,7 +443,44 @@ function initQuoteForm() {
       // Keep everything the visitor typed so they can retry or copy it
       showToast(QUOTE_ERRORS[result.error] || `Sorry, we couldn't send your request just now. ${QUOTE_FALLBACK}`, { error: true });
     }
+
+    // A Turnstile token works only once: get a fresh one for the next submit
+    // (after form.reset(), which would otherwise clear the new token's field)
+    if (window.turnstile && window._turnstileWidgetId != null) {
+      try { window.turnstile.reset(window._turnstileWidgetId); } catch { /* widget gone */ }
+    }
   });
+}
+
+/**
+ * Cloudflare Turnstile on the quote form. The api.js script is loaded with
+ * render=explicit (index.html only), so the widget is rendered here: compact
+ * (150px wide) when there's less than 300px of room, as on most phones, and
+ * the normal 300px size otherwise. Keeps the site key and theme from the
+ * .cf-turnstile element's data attributes.
+ */
+function initTurnstile() {
+  const el = document.querySelector('#quote-form .cf-turnstile');
+  if (!el) return;
+
+  let tries = 0;
+  const render = () => {
+    if (!window.turnstile || typeof window.turnstile.render !== 'function') {
+      // api.js loads async; wait for it (up to ~30s)
+      if (++tries < 300) setTimeout(render, 100);
+      return;
+    }
+    const compact = (el.parentElement ? el.parentElement.clientWidth : 0) < 300;
+    if (compact && el.parentElement) el.parentElement.style.minHeight = '140px';
+    try {
+      window._turnstileWidgetId = window.turnstile.render(el, {
+        sitekey: el.dataset.sitekey,
+        theme: el.dataset.theme || 'auto',
+        size: compact ? 'compact' : 'normal',
+      });
+    } catch { /* already rendered */ }
+  };
+  render();
 }
 
 /**

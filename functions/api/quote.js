@@ -22,7 +22,11 @@
  *
  * Settings (Cloudflare dashboard -> Pages project -> Settings ->
  * Variables and Secrets; locally in a .dev.vars file, which is git-ignored):
- *   RESEND_API_KEY  required, secret. Never put it in a committed file.
+ *   RESEND_API_KEY        required, secret. Never put it in a committed file.
+ *   TURNSTILE_SECRET_KEY  required, secret. Cloudflare Turnstile secret for
+ *                         the widget on the quote form (site key is in index.html).
+ *
+ * Order of checks: honeypot, then Turnstile, then field validation, then Resend.
  *
  * Senders must be on mail.arcforgedesigns.co.za (the domain verified in
  * Resend). Never use the bare arcforgedesigns.co.za domain, which is Zoho Mail.
@@ -33,6 +37,7 @@
 import { Buffer } from 'node:buffer';
 
 const RESEND_URL = 'https://api.resend.com/emails';
+const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const NOTIFY_TO = 'gean@arcforgedesigns.co.za';
 const NOTIFY_FROM = 'ArcForge Website <quotes@mail.arcforgedesigns.co.za>';
 const CONFIRM_FROM = 'ArcForge Designs <quotes@mail.arcforgedesigns.co.za>';
@@ -85,6 +90,37 @@ export async function onRequestPost({ request, env }) {
   // Pretend it worked (and send nothing) so the bot has no reason to retry.
   if (text(form.get('company-website'))) {
     return json({ ok: true });
+  }
+
+  // Cloudflare Turnstile: verify the widget's token before anything is sent.
+  // Never skipped: without the secret the form is reported as not configured.
+  if (!env.TURNSTILE_SECRET_KEY) {
+    console.error('quote: TURNSTILE_SECRET_KEY is not set');
+    return json({ ok: false, error: 'not-configured' }, 500);
+  }
+  const token = text(form.get('cf-turnstile-response'), 2048);
+  if (!token) {
+    return json({ ok: false, error: 'security-check' }, 400);
+  }
+  let verification;
+  try {
+    const verify = await fetch(TURNSTILE_VERIFY_URL, {
+      method: 'POST',
+      body: new URLSearchParams({
+        secret: env.TURNSTILE_SECRET_KEY,
+        response: token,
+        remoteip: request.headers.get('CF-Connecting-IP') || '',
+        idempotency_key: crypto.randomUUID(),
+      }),
+    });
+    verification = await verify.json();
+  } catch (err) {
+    console.error('quote: could not reach Turnstile', err && err.message);
+    return json({ ok: false, error: 'send-failed' }, 502);
+  }
+  if (!verification || verification.success !== true) {
+    console.warn('quote: Turnstile check failed', (verification && verification['error-codes']) || []);
+    return json({ ok: false, error: 'security-check' }, 400);
   }
 
   const name = text(form.get('name'), MAX_NAME);

@@ -97,6 +97,8 @@
 
   <!-- Virtual CNC plasma table (hero animation + live terminal readout) -->
   <script src="cnc-sim.js" defer></script>
+  <!-- Cloudflare Turnstile (quote form security check) -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 <body class="bg-[#0b1015] text-slate-100 min-h-screen selection:bg-[#00e5ff] selection:text-slate-950 relative overflow-x-hidden antialiased metal-grid-bg">
 
@@ -833,6 +835,12 @@
         <div class="hidden" aria-hidden="true">
           <label for="company-website">Leave this field empty</label>
           <input type="text" id="company-website" name="company-website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- Cloudflare Turnstile security check (rendered by initTurnstile in script.js, compact on narrow screens);
+             it adds a hidden cf-turnstile-response field that /api/quote verifies -->
+        <div class="flex justify-center min-h-[65px]">
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAGKFncAvcvmGC5gV" data-theme="auto"></div>
         </div>
 
         <!-- Submit Button in Electric Blue -->
