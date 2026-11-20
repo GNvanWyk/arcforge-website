@@ -829,6 +829,12 @@
           </label>
         </div>
 
+        <!-- Spam trap: hidden from people; /api/quote silently drops submissions that fill it -->
+        <div class="hidden" aria-hidden="true">
+          <label for="company-website">Leave this field empty</label>
+          <input type="text" id="company-website" name="company-website" tabindex="-1" autocomplete="off" />
+        </div>
+
         <!-- Submit Button in Electric Blue -->
         <button
           type="submit" 
@@ -975,13 +981,13 @@
     id="toast-notification" 
     class="hidden-toast fixed bottom-6 right-6 z-50 max-w-sm w-full bg-slate-900 border border-[#00e5ff]/40 shadow-2xl shadow-black/80 rounded-2xl p-4 flex items-start gap-3"
   >
-    <div class="w-8 h-8 rounded-lg bg-[#00e5ff]/20 text-[#00e5ff] flex items-center justify-center shrink-0 mt-0.5">
+    <div id="toast-icon" class="w-8 h-8 rounded-lg bg-[#00e5ff]/20 text-[#00e5ff] flex items-center justify-center shrink-0 mt-0.5">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+        <path id="toast-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
       </svg>
     </div>
     <div class="flex-1">
-      <h4 class="text-sm font-bold text-white brand-font">Quote Request Dispatched</h4>
+      <h4 id="toast-title" class="text-sm font-bold text-white brand-font">Quote Request Dispatched</h4>
       <p id="toast-message" class="text-xs text-slate-300 mt-1">Thank you! Your quote request has been received.</p>
     </div>
     <button id="toast-close" type="button" aria-label="Close notification" class="text-slate-400 hover:text-white p-1">

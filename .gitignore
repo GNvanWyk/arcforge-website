@@ -6,6 +6,7 @@ node_modules/
 
 # Environment files
 .env*
+.dev.vars
 
 # OS metadata
 .DS_Store

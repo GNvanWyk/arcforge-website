@@ -295,12 +295,32 @@ function initGalleryFilters() {
 }
 
 /**
- * Interactive Quote Request Form Handler
+ * Quote Request Form: posts the form (incl. the drawing file) to the
+ * Cloudflare Pages Function at /api/quote (functions/api/quote.js), which
+ * emails it to ArcForge. The success toast only shows once the server
+ * confirms the email went out; otherwise an error toast offers WhatsApp,
+ * phone and email instead.
  */
+const QUOTE_ENDPOINT = '/api/quote';
+const QUOTE_MAX_FILE_BYTES = 25 * 1024 * 1024; // keep in sync with functions/api/quote.js
+const QUOTE_TIMEOUT_MS = 90000;
+const QUOTE_FALLBACK = 'Please WhatsApp or call us on +27 61 493 6965, or email gean@arcforgedesigns.co.za.';
+const QUOTE_ERRORS = {
+  'file-too-large': 'Your file is larger than 25 MB. Please attach a smaller file, or email it to gean@arcforgedesigns.co.za.',
+  'file-type': 'That file type isn\'t supported. Please attach a DXF, DWG, SVG, PDF, PNG or JPG file.',
+  'missing-email': 'Please enter your email address so we can send you your quote.',
+  'invalid-email': 'That email address doesn\'t look right. Please check it (e.g. name@example.co.za) and try again.',
+  'missing-name': 'Please enter your name so we know who the quote is for.',
+  invalid: 'Some details are missing or invalid. Please check the form and try again.',
+};
+
 function initQuoteForm() {
   const form = document.getElementById('quote-form');
   const toast = document.getElementById('toast-notification');
   const toastMessage = document.getElementById('toast-message');
+  const toastTitle = document.getElementById('toast-title');
+  const toastIcon = document.getElementById('toast-icon');
+  const toastIconPath = document.getElementById('toast-icon-path');
   const toastClose = document.getElementById('toast-close');
   const dropzonePrompt = document.getElementById('dropzone-prompt');
   const fileDetails = document.getElementById('file-details');
@@ -318,17 +338,27 @@ function initQuoteForm() {
   if (termsCheckbox) termsCheckbox.addEventListener('change', syncSubmitState);
   syncSubmitState();
 
-  const showToast = (message) => {
+  const showToast = (message, { error = false, title } = {}) => {
     if (!toast) return;
     if (toastMessage) toastMessage.textContent = message;
+    if (toastTitle) toastTitle.textContent = title || (error ? 'Request Not Sent' : 'Quote Request Dispatched');
+    if (toastIconPath) toastIconPath.setAttribute('d', error ? 'M12 8v5m0 3.5v.01' : 'M5 13l4 4L19 7');
+    if (toastIcon) {
+      toastIcon.classList.toggle('bg-red-500/20', error);
+      toastIcon.classList.toggle('text-red-400', error);
+      toastIcon.classList.toggle('bg-[#00e5ff]/20', !error);
+      toastIcon.classList.toggle('text-[#00e5ff]', !error);
+    }
+    toast.setAttribute('role', error ? 'alert' : 'status');
 
     toast.classList.remove('hidden-toast');
     toast.classList.add('visible-toast');
 
+    // Errors stay up longer so there's time to read the contact details
     clearTimeout(window._toastTimer);
     window._toastTimer = setTimeout(() => {
       hideToast();
-    }, 5000);
+    }, error ? 12000 : 5000);
   };
 
   const hideToast = () => {
@@ -341,13 +371,20 @@ function initQuoteForm() {
     toastClose.addEventListener('click', hideToast);
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const submitBtn = form.querySelector('button[type="submit"]');
     const serviceType = form.querySelector('#service-type');
     const isGeneralMessage = serviceType && serviceType.value === 'other';
     const originalContent = submitBtn ? submitBtn.innerHTML : 'Submit Quote Request';
+
+    // Catch an oversized file before uploading it
+    const chosenFile = fileInput && fileInput.files && fileInput.files[0];
+    if (!isGeneralMessage && chosenFile && chosenFile.size > QUOTE_MAX_FILE_BYTES) {
+      showToast(QUOTE_ERRORS['file-too-large'], { error: true, title: 'File Too Large' });
+      return;
+    }
 
     if (submitBtn) {
       submitBtn.disabled = true;
@@ -360,21 +397,50 @@ function initQuoteForm() {
       `;
     }
 
-    setTimeout(() => {
+    const data = new FormData(form);
+    // The upload field is hidden for general messages; never send a stale file
+    if (isGeneralMessage) data.delete('drawing-file');
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), QUOTE_TIMEOUT_MS);
+    let result = { ok: false, error: 'network' };
+
+    try {
+      const response = await fetch(QUOTE_ENDPOINT, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+        signal: controller.signal,
+      });
+      result = await response.json().catch(() => ({ ok: false, error: 'server' }));
+      if (!response.ok) result.ok = false;
+    } catch {
+      result = { ok: false, error: 'network' };
+    } finally {
+      clearTimeout(timeout);
+    }
+
+    if (submitBtn) {
+      submitBtn.innerHTML = originalContent;
+      syncSubmitState();
+    }
+
+    if (result.ok) {
+      // Only clear the form once it has really been sent
       form.reset();
       if (fileInput) fileInput.value = '';
       if (dropzonePrompt) dropzonePrompt.classList.remove('hidden');
       if (fileDetails) fileDetails.classList.add('hidden');
-
-      if (submitBtn) {
-        submitBtn.innerHTML = originalContent;
-        syncSubmitState();
-      }
+      syncSubmitState();
 
       showToast(isGeneralMessage
         ? 'Message received! We\'ll get back to you shortly.'
-        : 'Quote request received! Our engineering team will review your files and respond promptly.');
-    }, 1000);
+        : 'Quote request received! Our engineering team will review your files and respond promptly.',
+        isGeneralMessage ? { title: 'Message Sent' } : {});
+    } else {
+      // Keep everything the visitor typed so they can retry or copy it
+      showToast(QUOTE_ERRORS[result.error] || `Sorry, we couldn't send your request just now. ${QUOTE_FALLBACK}`, { error: true });
+    }
   });
 }
 
